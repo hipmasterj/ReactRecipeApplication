@@ -6,6 +6,7 @@ import AddRecipe from "./components/AddRecipe/index.jsx";
 //import 'bootstrap/dist/css/bootstrap.min.css';
 import "./custom.scss";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import BrowseRecipes from "./components/browseRecipes/index.jsx";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Switch>
         <Route path="/" exact component={HomePage} />
         <Route path="/add" component={AddRecipe} />
+        <Route path="/recipes" component={BrowseRecipes} />
         </Switch> 
       </div>
     </Router>

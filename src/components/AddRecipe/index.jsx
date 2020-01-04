@@ -1,6 +1,7 @@
 import React from "react";
 import "./styles.scss";
 import { Container, Jumbotron} from "react-bootstrap";
+import axios from 'axios';
 
 
 export default class AddRecipe extends React.Component {
@@ -70,6 +71,17 @@ export default class AddRecipe extends React.Component {
         console.log(`Num Servings: ${this.state.numServings}`);
         console.log(`Difficulty: ${this.state.difficulty}`);
         console.log(`Method: ${this.state.method}`);
+
+        const newRecipe = {
+            recipeName:this.state.recipeName,
+            prepTime:this.state.prepTime,
+            cookingTime:this.state.cookingTime,
+            numServings:this.state.numServings,
+            difficulty:this.state.difficulty,
+            method:this.state.method
+        }
+
+        axios.post('http://localhost:4000/recipe/add', newRecipe).then(res => console.log(res.data));
 
         this.setState({
             recipeName: '',
