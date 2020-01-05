@@ -9,6 +9,7 @@ export default class AddRecipe extends React.Component {
     super(props);
 
     this.onChangeRecipeName = this.onChangeRecipeName.bind(this);
+    this.onChangeRecipeDescription = this.onChangeRecipeDescription.bind(this);
     this.onChangePrepTime = this.onChangePrepTime.bind(this);
     this.onChangeCookingTime = this.onChangeCookingTime.bind(this);
     this.onChangeNumServings = this.onChangeNumServings.bind(this);
@@ -19,6 +20,7 @@ export default class AddRecipe extends React.Component {
     this.state = {
 
         recipeName: '',
+        recipeDescription:'',
         prepTime: '',
         cookingTime: '',
         numServings: '',
@@ -32,6 +34,12 @@ export default class AddRecipe extends React.Component {
       this.setState({
           recipeName: e.target.value
       })
+    }
+
+    onChangeRecipeDescription(e){
+        this.setState({
+            recipeDescription:e.target.value
+        })
     }
 
     onChangePrepTime(e){
@@ -66,6 +74,7 @@ export default class AddRecipe extends React.Component {
 
         console.log(`Form submitted:`);
         console.log(`Recipe Name: ${this.state.recipeName}`);
+        console.log(`Recipe Description: ${this.state.recipeDescription}`);
         console.log(`Prep Time: ${this.state.prepTime}`);
         console.log(`Cooking Time: ${this.state.cookingTime}`);
         console.log(`Num Servings: ${this.state.numServings}`);
@@ -74,6 +83,7 @@ export default class AddRecipe extends React.Component {
 
         const newRecipe = {
             recipeName:this.state.recipeName,
+            recipeDescription:this.state.recipeDescription,
             prepTime:this.state.prepTime,
             cookingTime:this.state.cookingTime,
             numServings:this.state.numServings,
@@ -85,6 +95,7 @@ export default class AddRecipe extends React.Component {
 
         this.setState({
             recipeName: '',
+            recipeDescription:'',
             prepTime: '',
             cookingTime: '',
             numServings: 1,
@@ -113,6 +124,18 @@ export default class AddRecipe extends React.Component {
                     value={this.state.recipeName}
                     onChange={this.onChangeRecipeName}
                 />
+
+                <label className='form-layout'>Description:</label>
+                <input
+                    className="form-layout"
+                    type="text"
+                    name="recipeDescription"
+                    id="recipeDescription"
+                    placeholder="Recipe Description..."
+                    value={this.state.recipeDescription}
+                    onChange={this.onChangeRecipeDescription}
+                />
+
 
                 <label className='form-layout'>Prep Time:</label>
                 <input
