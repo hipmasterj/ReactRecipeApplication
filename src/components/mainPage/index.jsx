@@ -6,13 +6,54 @@ import BurritoImage from "../../resources/images/burrito.jpeg";
 import Button from "react-bootstrap/Button";
 import { Jumbotron, Container } from "react-bootstrap";
 import {Link} from 'react-router-dom';
+import axios from 'axios';
+
+
+const Recipe = props => (
+    <Card>
+    <Card.Img variant="top" src={BurritoImage} />
+    <Card.Body>
+      <Card.Title>{props.recipe.recipeName}</Card.Title>
+      <Card.Text>
+        {props.recipe.recipeDescription}
+      </Card.Text>
+      <Button variant="primary">View Recipe</Button>
+    </Card.Body>
+    <Card.Footer>
+      <small className="text-muted">Added on: {props.recipe.dateAdded}</small>
+    </Card.Footer>
+    </Card>
+)
 
 
 export default class HomePage extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {      
+      recipes:[]
+    };
   }
+
+  componentDidMount() {
+      axios.get('http://localhost:4000/recipe/featured')
+      .then(response => {
+        this.setState({recipes: response.data
+      });
+      })
+      .catch(function(error){
+          console.log(error);
+      })
+  }
+
+
+
+  recipeCard() {
+    return this.state.recipes.map(function(currentRecipe, i){
+      return <Recipe recipe={currentRecipe} key={i}  />;
+    })
+  }
+
+
 
   render() {
     return (
@@ -30,22 +71,12 @@ export default class HomePage extends React.Component {
         </Jumbotron>
        </div>
         <div className="top-row">
+
+          
+
           <CardDeck className="main-content">
-            <Card>
-              <Card.Img variant="top" src={BurritoImage} />
-              <Card.Body>
-                <Card.Title>Card title</Card.Title>
-                <Card.Text>
-                  This is a wider card with supporting text below as a natural
-                  lead-in to additional content. This content is a little bit
-                  longer.
-                </Card.Text>
-                <Button variant="primary">Read More</Button>
-              </Card.Body>
-              <Card.Footer>
-                <small className="text-muted">Last updated 3 mins ago</small>
-              </Card.Footer>
-            </Card>
+              { this.recipeCard() }                        
+            {/*
             <Card>
               <Card.Img variant="top" src={BurritoImage} />
               <Card.Body>
@@ -90,8 +121,11 @@ export default class HomePage extends React.Component {
                 <small className="text-muted">Last updated 3 mins ago</small>
               </Card.Footer>
             </Card>
+            */}    
           </CardDeck>
         </div>
+
+        {/* 
         <div className="bottom-row">
           <CardDeck className="main-content">
             <Card>
@@ -153,8 +187,10 @@ export default class HomePage extends React.Component {
                 <small className="text-muted">Last updated 3 mins ago</small>
               </Card.Footer>
             </Card>
+                 
           </CardDeck>
         </div>
+        */}
       </div>
     );
   }

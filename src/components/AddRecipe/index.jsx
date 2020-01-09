@@ -23,9 +23,10 @@ export default class AddRecipe extends React.Component {
         recipeDescription:'',
         prepTime: '',
         cookingTime: '',
-        numServings: '',
-        difficulty: '',
-        method: ''
+        numServings: 1,
+        difficulty: 'Easy',
+        method: '',
+        dateAdded:''
 
     };
   }
@@ -72,6 +73,12 @@ export default class AddRecipe extends React.Component {
     onSubmit(e) {
         e.preventDefault();
 
+        
+        var date = new Date();
+        //use below to return date in AEST
+        var localDate = new Date(date);
+        console.log(localDate);
+
         console.log(`Form submitted:`);
         console.log(`Recipe Name: ${this.state.recipeName}`);
         console.log(`Recipe Description: ${this.state.recipeDescription}`);
@@ -79,7 +86,7 @@ export default class AddRecipe extends React.Component {
         console.log(`Cooking Time: ${this.state.cookingTime}`);
         console.log(`Num Servings: ${this.state.numServings}`);
         console.log(`Difficulty: ${this.state.difficulty}`);
-        console.log(`Method: ${this.state.method}`);
+        console.log(`Method: ${this.state.method}`);        
 
         const newRecipe = {
             recipeName:this.state.recipeName,
@@ -88,7 +95,8 @@ export default class AddRecipe extends React.Component {
             cookingTime:this.state.cookingTime,
             numServings:this.state.numServings,
             difficulty:this.state.difficulty,
-            method:this.state.method
+            method:this.state.method,
+            dateAdded: date
         }
 
         axios.post('http://localhost:4000/recipe/add', newRecipe).then(res => console.log(res.data));
@@ -99,7 +107,7 @@ export default class AddRecipe extends React.Component {
             prepTime: '',
             cookingTime: '',
             numServings: 1,
-            difficulty: '',
+            difficulty: 'Easy',
             method: ''
         })
     }
